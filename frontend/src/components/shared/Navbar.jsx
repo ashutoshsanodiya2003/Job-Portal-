@@ -1,20 +1,14 @@
 import React from "react";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-  Avatar,
-  AvatarImage,
-  AvatarFallback,
-} from "@/components/ui/avatar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { User2, LogOut } from "lucide-react"; // ✅ Corrected
 
 const Navbar = () => {
   return (
     <nav className="bg-white border-b">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-        
+
         {/* Logo */}
         <h1 className="text-2xl font-bold">
           Job <span className="text-[#f83002]">Portal</span>
@@ -31,16 +25,33 @@ const Navbar = () => {
           <Popover>
             <PopoverTrigger asChild>
               <Avatar className="cursor-pointer">
-                <AvatarImage
-                  src="https://github.com/shadcn.png"
-                  alt="@shadcn"
-                />
+                <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
                 <AvatarFallback>U</AvatarFallback>
               </Avatar>
             </PopoverTrigger>
 
-            <PopoverContent className="w-40">
-              <h1 className="font-medium">Hello 👋</h1>
+            <PopoverContent className="w-56 space-y-4">
+              {/* User Info */}
+              <div className="flex items-center gap-3">
+                <Avatar>
+                  <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                  <AvatarFallback>U</AvatarFallback>
+                </Avatar>
+                <div>
+                  <h4 className="font-semibold">Patel Mern Stack</h4>
+                  <p className="text-sm text-gray-500">Lorem ipsum dolor sit amet.</p>
+                </div>
+              </div>
+
+              {/* Actions */}
+              <div className="flex flex-col gap-2">
+                <Button variant="link" className="justify-start">
+                  <User2 className="mr-2" /> View Profile
+                </Button>
+                <Button variant="link" className="justify-start text-red-500">
+                  <LogOut className="mr-2" /> Logout {/* ✅ Corrected */}
+                </Button>
+              </div>
             </PopoverContent>
           </Popover>
         </div>
