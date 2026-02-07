@@ -1,16 +1,77 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from '../shared/Navbar'
 import { Input } from '../ui/input'
 import * as Label from '@radix-ui/react-label'
 import { Button } from '../ui/button'
 
+import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios'
+import { USER_API_URL_ENDPOINT } from '@/utils/constant'
+import { toast } from 'sonner'
+
+
 const Register = () => {
+ const navigate =  useNavigate()
+
+  const [input, setInput] = useState({
+    fullname: "",
+    email: "",
+    phoneNumber: "",
+    password: "",
+    role: "",
+    file: ""
+
+  })
+
+  const changeEventHandler = (e) => {
+    setInput({ ...input, [e.target.name]: e.target.value })
+  }
+
+
+  const changeFileHandler = (e) => {
+    setInput(({ ...input, file: e.target.file?.[0] }))
+  }
+
+
+  const submitHandler = async(e) => {
+    e.preventDefault()
+
+    const formData = new FormData()
+
+    formData.append("fullname",input.fullname)
+    formData.append("email",input.email)
+    formData.append("phoneNumber",input.phoneNumber)
+    formData.append("password",input.password)
+    formData.append("role",input.role)
+    if(input.file){
+    formData.append("file",input.file)
+
+    }
+    
+
+    try {
+      
+
+      const res = await axios.post(`${USER_API_URL_ENDPOINT}/register`,formData,{
+        headers:{
+          "Content-Type":"multipart/form-data"
+        },withCredentials:true
+      })
+      if(res.data.success){
+        navigate("/login")
+        toast.success(res.data.message)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
 
       <div className="flex justify-center items-center mt-12 px-4">
-        <form className="bg-white p-8 rounded-lg shadow-md w-full max-w-md space-y-6">
+        <form onSubmit={submitHandler} className="bg-white p-8 rounded-lg shadow-md w-full max-w-md space-y-6">
           <h2 className="text-2xl font-bold text-gray-800 text-center">Create Your Account</h2>
 
           {/* Full Name */}
@@ -19,6 +80,10 @@ const Register = () => {
               Full Name
             </Label.Root>
             <Input
+
+              value={input.fullname}
+              name="fullname"
+              onChange={changeEventHandler}
               id="fullName"
               type="text"
               placeholder="Patel"
@@ -32,6 +97,10 @@ const Register = () => {
               Email
             </Label.Root>
             <Input
+
+              value={input.email}
+              name="email"
+              onChange={changeEventHandler}
               id="email"
               type="email"
               placeholder="example@email.com"
@@ -45,6 +114,11 @@ const Register = () => {
               Phone Number
             </Label.Root>
             <Input
+
+              value={input.phoneNumber}
+              name="phoneNumber"
+              onChange={changeEventHandler}
+
               id="phone"
               type="tel"
               placeholder="+91 ***********"
@@ -58,6 +132,10 @@ const Register = () => {
               Password
             </Label.Root>
             <Input
+
+              value={input.password}
+              name="password"
+              onChange={changeEventHandler}
               id="password"
               type="password"
               placeholder="••••••••"
@@ -70,11 +148,23 @@ const Register = () => {
             <Label.Root className="font-medium text-gray-700">I am a:</Label.Root>
             <div className="flex gap-6">
               <div className="flex items-center gap-2">
-                <Input type="radio" name="role" value="student" id="student" className="cursor-pointer" />
+                <Input
+                  name="role"
+                  value="student"
+                  checked={input.role === 'student'}
+                  onChange={changeEventHandler}
+
+
+                  type="radio" id="student" className="cursor-pointer" />
                 <Label.Root htmlFor="student">Student</Label.Root>
               </div>
               <div className="flex items-center gap-2">
-                <Input type="radio" name="role" value="recruiter" id="recruiter" className="cursor-pointer" />
+                <Input
+                  name="role"
+                  value="recruiter"
+                  checked={input.role === 'recruiter'}
+                  onChange={changeEventHandler}
+                  type="radio" id="recruiter" className="cursor-pointer" />
                 <Label.Root htmlFor="recruiter">Recruiter</Label.Root>
               </div>
             </div>
@@ -86,6 +176,7 @@ const Register = () => {
             <Input
               type="file"
               accept="image/*"
+              onChange={changeFileHandler}
               className="cursor-pointer border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#f83002]"
             />
           </div>
@@ -97,11 +188,12 @@ const Register = () => {
 
           {/* Footer */}
           <p className="text-sm text-gray-500 text-center">
-            Already have an account?{' '}
-            <a href="/login" className="text-[#f83002] hover:underline">
+            Already have an account?{" "}
+            <Link to="/login" className="text-[#f83002] hover:underline">
               Login
-            </a>
+            </Link>
           </p>
+
         </form>
       </div>
     </div>
