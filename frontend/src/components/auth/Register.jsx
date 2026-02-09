@@ -8,10 +8,15 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios'
 import { USER_API_URL_ENDPOINT } from '@/utils/constant'
 import { toast } from 'sonner'
+import { useDispatch, useSelector } from 'react-redux'
+import { setLoading } from '@/redux/authSlice'
+import { Loader2 } from 'lucide-react'
 
 
 const Register = () => {
- const navigate =  useNavigate()
+  const { loading } = useSelector(store => store.auth)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const [input, setInput] = useState({
     fullname: "",
@@ -33,36 +38,39 @@ const Register = () => {
   }
 
 
-  const submitHandler = async(e) => {
+  const submitHandler = async (e) => {
     e.preventDefault()
 
     const formData = new FormData()
 
-    formData.append("fullname",input.fullname)
-    formData.append("email",input.email)
-    formData.append("phoneNumber",input.phoneNumber)
-    formData.append("password",input.password)
-    formData.append("role",input.role)
-    if(input.file){
-    formData.append("file",input.file)
+    formData.append("fullname", input.fullname)
+    formData.append("email", input.email)
+    formData.append("phoneNumber", input.phoneNumber)
+    formData.append("password", input.password)
+    formData.append("role", input.role)
+    if (input.file) {
+      formData.append("file", input.file)
 
     }
-    
+
 
     try {
-      
 
-      const res = await axios.post(`${USER_API_URL_ENDPOINT}/register`,formData,{
-        headers:{
-          "Content-Type":"multipart/form-data"
-        },withCredentials:true
+      dispatch(setLoading(true))
+
+      const res = await axios.post(`${USER_API_URL_ENDPOINT}/register`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }, withCredentials: true
       })
-      if(res.data.success){
+      if (res.data.success) {
         navigate("/login")
         toast.success(res.data.message)
       }
     } catch (error) {
       console.log(error)
+    } finally {
+      dispatch(setLoading(false))
     }
 
   }
@@ -182,9 +190,19 @@ const Register = () => {
           </div>
 
           {/* Submit Button */}
-          <Button className="w-full bg-[#f83002] text-white font-semibold py-2 rounded-md hover:bg-[#d92c00] transition-colors">
-            Register
-          </Button>
+          {
+            loading ?
+              <Button disabled>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Please wait
+              </Button>
+              :
+
+              <Button className="w-full bg-[#f83002] text-white font-semibold py-2 rounded-md hover:bg-[#d92c00] transition-colors">
+                Register
+              </Button>
+
+          }
 
           {/* Footer */}
           <p className="text-sm text-gray-500 text-center">

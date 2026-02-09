@@ -7,45 +7,47 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios'
 import { toast } from 'sonner'
 import { USER_API_URL_ENDPOINT } from '@/utils/constant'
+import { useDispatch, useSelector } from 'react-redux'
+import { setLoading } from '@/redux/authSlice'
+import { Loader2 } from 'lucide-react'
 
 
 
 const Login = () => {
+  const { loading } = useSelector(store => store.auth)
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-const [input, setInput] = useState({
-  email:'',
-  password:'',
-  role:''
-})
+  const [input, setInput] = useState({
+    email: '',
+    password: '',
+    role: ''
+  })
 
-const changeEventHandler = (e)=>{
-setInput({...input,[e.target.name]:e.target.value})
-}
+  const changeEventHandler = (e) => {
+    setInput({ ...input, [e.target.name]: e.target.value })
+  }
 
 
- const submitHandler = async(e) => {
+  const submitHandler = async (e) => {
     e.preventDefault()
 
-    
-
-    
-    
-
     try {
-      
 
-      const res = await axios.post(`${USER_API_URL_ENDPOINT}/login`,input,{
-        headers:{
-          "Content-Type":"application/json"
-        },withCredentials:true
+      dispatch(setLoading(true))
+      const res = await axios.post(`${USER_API_URL_ENDPOINT}/login`, input, {
+        headers: {
+          "Content-Type": "application/json"
+        }, withCredentials: true
       })
-      if(res.data.success){
+      if (res.data.success) {
         navigate("/")
         toast.success(res.data.message)
       }
     } catch (error) {
       console.log(error)
+    } finally {
+      dispatch(setLoading(false))
     }
 
   }
@@ -65,9 +67,9 @@ setInput({...input,[e.target.name]:e.target.value})
               Email
             </Label.Root>
             <Input
-            value={input.email}
-            name="email"
-            onChange={changeEventHandler}
+              value={input.email}
+              name="email"
+              onChange={changeEventHandler}
               id="email"
               type="email"
               placeholder="example@email.com"
@@ -84,9 +86,9 @@ setInput({...input,[e.target.name]:e.target.value})
             </Label.Root>
             <Input
 
-            value={input.password}
-            name="password"
-            onChange={changeEventHandler}
+              value={input.password}
+              name="password"
+              onChange={changeEventHandler}
               id="password"
               type="password"
               placeholder="••••••••"
@@ -101,29 +103,39 @@ setInput({...input,[e.target.name]:e.target.value})
               <div className="flex items-center gap-2">
 
                 <Input
-                checked={input.role === 'student'}
-                onChange={changeEventHandler}
-                
-                type="radio" name="role" value="student" id="student" className="cursor-pointer" />
+                  checked={input.role === 'student'}
+                  onChange={changeEventHandler}
+
+                  type="radio" name="role" value="student" id="student" className="cursor-pointer" />
                 <Label.Root htmlFor="student">Student</Label.Root>
               </div>
               <div className="flex items-center gap-2">
                 <Input
-                
-                checked={input.role === 'recruiter'}
-                onChange={changeEventHandler}
-                type="radio" name="role" value="recruiter" id="recruiter" className="cursor-pointer" />
+
+                  checked={input.role === 'recruiter'}
+                  onChange={changeEventHandler}
+                  type="radio" name="role" value="recruiter" id="recruiter" className="cursor-pointer" />
                 <Label.Root htmlFor="recruiter">Recruiter</Label.Root>
               </div>
             </div>
           </div>
 
+          {
+            loading ?
+              <Button disabled>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Please wait
+              </Button>
+              :
 
+              <Button className="w-full bg-[#f83002] text-white font-semibold py-2 rounded-md hover:bg-[#d92c00] transition-colors">
+                Login
+              </Button>
+
+          }
 
           {/* Submit Button */}
-          <Button className="w-full bg-[#f83002] text-white font-semibold py-2 rounded-md hover:bg-[#d92c00] transition-colors">
-            Login
-          </Button>
+
 
           {/* Footer */}
           <p className="text-sm text-gray-500 text-center">
