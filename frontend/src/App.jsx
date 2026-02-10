@@ -6,6 +6,7 @@ import Home from './components/Home'
 import Register from './components/auth/Register'
 import Login from './components/auth/Login'
 import Jobs from './components/Jobs'
+import Browse from './components/Browse'
 
 function App() {
 
@@ -25,6 +26,11 @@ function App() {
     {
       path:'/jobs',
       element:<Jobs/>
+
+    },
+     {
+      path:'/browse',
+      element:<Browse/>
 
     }
   ])
