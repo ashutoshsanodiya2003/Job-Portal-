@@ -4,11 +4,12 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Pen, Mail, Phone } from 'lucide-react'; // Badge will be a custom UI component
 import { Button } from './ui/button';
 import { Badge } from './ui/badge'; // Make sure you import Badge correctly
-import { Label } from 'radix-ui';
+// import  Label  from 'radix-ui';
 
 const skills = ['html', 'JavaScript', 'java', 'react'];
 
 const Profile = () => {
+    const isResume = true
   return (
     <div className="min-h-screen bg-gray-100">
       <Navbar />
@@ -60,6 +61,21 @@ const Profile = () => {
             )}
           </div>
         </div>
+<div className='grid w-full max-w-sm items-center gap-1.5 mt-5 border-b-2 border-b-blue-950'>
+  <h3 className="font-medium mb-2">Resume</h3>
+  {isResume ? (
+    <a
+      target='_blank'
+      rel="noopener noreferrer"
+      href="https://github.com/ashutoshsanodiya2003/Job-Portal-"
+      className="text-blue-600 underline hover:text-blue-800"
+    >
+      resume.pdf
+    </a>
+  ) : (
+    <span>NA</span>
+  )}
+</div>
 
         
       </div>
