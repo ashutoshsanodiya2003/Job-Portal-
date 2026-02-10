@@ -19,21 +19,21 @@ const Navbar = () => {
         {/* Menu + Avatar / Auth Buttons */}
         <div className="flex items-center gap-6">
           <ul className="flex gap-6 text-gray-700 font-medium">
-            <li className="cursor-pointer hover:text-[#f83002]">Home</li>
-            <li className="cursor-pointer hover:text-[#f83002]">Jobs</li>
-            <li className="cursor-pointer hover:text-[#f83002]">Browse</li>
+            <li className="cursor-pointer hover:text-[#f83002]"> <Link to={'/'}>Home</Link></li>
+            <li className="cursor-pointer hover:text-[#f83002]"><Link to={'/jobs'}>Jobs</Link></li>
+            <li className="cursor-pointer hover:text-[#f83002]"><Link to={'/Browse'}>Browse</Link></li>
           </ul>
 
           {!user ? (
             <div className="flex gap-2">
 
               <Link to={"/login"}>
-              <Button variant="outline">Login</Button>
-              
+                <Button variant="outline">Login</Button>
+
               </Link>
               <Link to={'/register'}>
-              <Button>Sign Up</Button>
-              
+                <Button>Sign Up</Button>
+
               </Link>
 
             </div>

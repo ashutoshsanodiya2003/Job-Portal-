@@ -5,6 +5,7 @@ import Navbar from './components/shared/Navbar'
 import Home from './components/Home'
 import Register from './components/auth/Register'
 import Login from './components/auth/Login'
+import Jobs from './components/Jobs'
 
 function App() {
 
@@ -20,6 +21,11 @@ function App() {
     },{
       path:'/login',
       element:<Login/>
+    },
+    {
+      path:'/jobs',
+      element:<Jobs/>
+
     }
   ])
   
