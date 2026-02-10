@@ -4,9 +4,12 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { User2, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import store from "@/redux/store";
 
 const Navbar = () => {
-  const user = false; // Change to true to test logged-in view
+  // const user = false; 
+  const {user} = useSelector(store=> store.auth)
 
   return (
     <nav className="bg-white border-b">
@@ -62,7 +65,7 @@ const Navbar = () => {
                 {/* Actions */}
                 <div className="flex flex-col gap-2">
                   <Button variant="link" className="justify-start">
-                    <User2 className="mr-2" /> View Profile
+                    <User2 className="mr-2" />    <Link to={'/profile'}> View Profile</Link>
                   </Button>
                   <Button variant="link" className="justify-start text-red-500">
                     <LogOut className="mr-2" /> Logout

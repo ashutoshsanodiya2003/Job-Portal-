@@ -7,6 +7,7 @@ import Register from './components/auth/Register'
 import Login from './components/auth/Login'
 import Jobs from './components/Jobs'
 import Browse from './components/Browse'
+import Profile from './components/Profile'
 
 function App() {
 
@@ -31,6 +32,11 @@ function App() {
      {
       path:'/browse',
       element:<Browse/>
+
+    },
+    {
+      path:'/profile',
+      element:<Profile/>
 
     }
   ])
