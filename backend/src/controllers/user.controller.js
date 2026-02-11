@@ -143,8 +143,10 @@ export const logoutUser = async (req, res) => {
 
 
 export const UpdateProfile = async (req, res) => {
+  console.log("hello")
   try {
     const { fullname, email, phoneNumber, bio, skills } = req.body;
+    console.log(fullname, email, phoneNumber, bio, skills )
 
     const file = req.file;
 

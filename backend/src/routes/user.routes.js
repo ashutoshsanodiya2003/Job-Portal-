@@ -7,7 +7,7 @@ const router = express.Router()
 
 router.post('/register',singleUpload,registerUser)
 router.post('/login',loginUser)
-router.patch('/update/profile',isAuthenticated,UpdateProfile)
+router.patch('/update/profile',isAuthenticated,singleUpload,UpdateProfile)
 router.get('/logout',logoutUser)
 
 

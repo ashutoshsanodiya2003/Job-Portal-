@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from './shared/Navbar';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Pen, Mail, Phone } from 'lucide-react'; // Badge will be a custom UI component
@@ -6,21 +6,22 @@ import { Button } from './ui/button';
 import { Badge } from './ui/badge'; // Make sure you import Badge correctly
 // import Application from './AppliedJobTable';
 import AppliedJobTable from './AppliedJobTable';
+import UpdateProfileDialog from './UpdateProfileDialog';
 // import  Label  from 'radix-ui';
 
 const skills = ['html', 'JavaScript', 'java', 'react'];
+const isResume = true
 
 const Profile = () => {
 
-    
-    const isResume = true
+    const [open, setOpen] = useState(false)
     return (
         <div className="min-h-screen bg-gray-100">
             <Navbar />
 
             <div className="max-w-3xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md relative">
                 {/* Edit Button in Top-Right */}
-                <Button variant="outline" className="absolute top-4 right-4 p-2">
+                <Button onClick={() => setOpen(true)} variant="outline" className="absolute top-4 right-4 p-2">
                     <Pen className="w-4 h-4" />
                 </Button>
 
@@ -81,14 +82,17 @@ const Profile = () => {
                     )}
                 </div>
 
-<div className='max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-6 mt-6'>
+                <div className='max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-6 mt-6'>
 
-    <h1 className='text-2xl font-bold text-gray-900 mb-4'>Applied Jobs</h1>
-    <AppliedJobTable/>
+                    <h1 className='text-2xl font-bold text-gray-900 mb-4'>Applied Jobs</h1>
+                    <AppliedJobTable />
 
-</div>
+                </div>
+
+                <UpdateProfileDialog open={open} setOpen={setOpen} />
 
             </div>
+
         </div>
     );
 };
