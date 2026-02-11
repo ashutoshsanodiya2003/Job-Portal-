@@ -2,8 +2,11 @@ import React from 'react'
 import { Bookmark } from 'lucide-react'
 import { Button } from './ui/button'
 import { Avatar, AvatarImage, AvatarFallback } from './ui/avatar'
+import { useNavigate } from 'react-router-dom'
 
 const Job = () => {
+  const navigate = useNavigate()
+  const jobId = "gkgkahhkbknvznkngks"
   return (
     <div className="w-full max-w-3xl mx-auto border border-gray-200 rounded-lg p-5 bg-white space-y-5">
 
@@ -46,10 +49,10 @@ const Job = () => {
 
       {/* Footer */}
       <div className="flex items-center justify-end gap-3 pt-2 border-t">
-        <Button variant="outline">Details</Button>
+        <Button onClick = {(e)=>navigate(`/description/${jobId}`)} variant="outline">Details</Button>
         <Button>Save For Later</Button>
       </div>
-
+ 
     </div>
   )
 }

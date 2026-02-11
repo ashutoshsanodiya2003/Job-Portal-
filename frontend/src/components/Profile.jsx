@@ -11,6 +11,8 @@ import AppliedJobTable from './AppliedJobTable';
 const skills = ['html', 'JavaScript', 'java', 'react'];
 
 const Profile = () => {
+
+    
     const isResume = true
     return (
         <div className="min-h-screen bg-gray-100">
