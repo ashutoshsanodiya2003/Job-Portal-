@@ -1,6 +1,8 @@
 import { UserModel } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import getDataUri from "../utils/data.uri.js";
+import cloudinary from "../utils/cloudinary.js";
 
 export const registerUser = async (req, res) => {
   try {
@@ -146,16 +148,18 @@ export const UpdateProfile = async (req, res) => {
   console.log("hello")
   try {
     const { fullname, email, phoneNumber, bio, skills } = req.body;
-    console.log(fullname, email, phoneNumber, bio, skills )
+    // console.log(fullname, email, phoneNumber, bio, skills)
 
     const file = req.file;
+    let cloudResponse
+    if (file) {
 
-    // if(!fullname||!email||!phoneNumber||!bio||!skills){
-    //     return res.status(400).json({
-    //         message:"all field are required",
-    //         success:false
-    //     })
-    // }
+      const fileUri = getDataUri(file)
+      cloudResponse = await cloudinary.uploader.upload(fileUri.content)
+
+    }
+
+
 
     let skillsArray;
     if (skills) {
@@ -179,6 +183,11 @@ export const UpdateProfile = async (req, res) => {
     if (bio) user.profile.bio = bio;
     if (skills) user.profile.skills = skills;
 
+    if (cloudResponse) {
+      user.profile.resume = cloudResponse.secure_url
+      user.profile.resumeOriginalName = file.originalname
+    }
+
     await user.save();
 
     res.status(200).json({
@@ -190,7 +199,8 @@ export const UpdateProfile = async (req, res) => {
         email: user.email,
         role: user.role,
         profile: user.profile,
-        
+        phoneNumber:user.phoneNumber
+
       },
     });
   } catch (error) {

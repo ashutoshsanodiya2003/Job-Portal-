@@ -18,6 +18,7 @@ const Profile = () => {
 
     const [open, setOpen] = useState(false)
     const {user} = useSelector(store=>store.auth)
+    console.log("user.phoneNumber",user.phoneNumber)
     return (
         <div className="min-h-screen bg-gray-100">
             <Navbar />
@@ -78,7 +79,7 @@ const Profile = () => {
                             href="https://github.com/ashutoshsanodiya2003/Job-Portal-"
                             className="text-blue-600 underline hover:text-blue-800"
                         >
-                            resume.pdf
+                            {user?.profile?.resumeOriginalName}
                         </a>
                     ) : (
                         <span>NA</span>

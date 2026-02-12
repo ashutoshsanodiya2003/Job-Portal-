@@ -231,6 +231,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
 
       if (res.data.success) {
         dispatch(setUser(res.data.user))
+        console.log(res.data.user)
         toast.success(res.data.message)
         setOpen(false)
       }
