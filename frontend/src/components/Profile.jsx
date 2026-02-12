@@ -7,14 +7,17 @@ import { Badge } from './ui/badge'; // Make sure you import Badge correctly
 // import Application from './AppliedJobTable';
 import AppliedJobTable from './AppliedJobTable';
 import UpdateProfileDialog from './UpdateProfileDialog';
+import { useSelector } from 'react-redux';
+import store from '@/redux/store';
 // import  Label  from 'radix-ui';
 
-const skills = ['html', 'JavaScript', 'java', 'react'];
+// const skills = ['html', 'JavaScript', 'java', 'react'];
 const isResume = true
 
-const Profile = () => {
+const Profile = () => { 
 
     const [open, setOpen] = useState(false)
+    const {user} = useSelector(store=>store.auth)
     return (
         <div className="min-h-screen bg-gray-100">
             <Navbar />
@@ -33,9 +36,9 @@ const Profile = () => {
                     </Avatar>
 
                     <div>
-                        <h1 className="text-xl font-bold">Full Name</h1>
+                        <h1 className="text-xl font-bold">{user?.fullname}</h1>
                         <p className="text-gray-600">
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Blanditiis, unde.
+                            {user?.bio}
                         </p>
                     </div>
                 </div>
@@ -44,12 +47,12 @@ const Profile = () => {
                 <div className="space-y-4 mb-6">
                     <div className="flex items-center space-x-3 text-gray-700">
                         <Mail className="w-5 h-5" />
-                        <span>patel@gmail.com</span>
+                        <span>{user?.email}</span>
                     </div>
 
                     <div className="flex items-center space-x-3 text-gray-700">
                         <Phone className="w-5 h-5" />
-                        <span>1234567890</span>
+                        <span>{user?.phoneNumber}</span>
                     </div>
                 </div>
 
@@ -57,8 +60,8 @@ const Profile = () => {
                 <div className="mt-6">
                     <h2 className="text-lg font-semibold mb-2">Skills</h2>
                     <div className="flex flex-wrap gap-2">
-                        {skills.length !== 0 ? (
-                            skills.map((skill, index) => (
+                        {user?.profile?.skills.length !== 0 ? (
+                            user?.profile?.skills.map((skill, index) => (
                                 <Badge key={index}>{skill}</Badge>
                             ))
                         ) : (
