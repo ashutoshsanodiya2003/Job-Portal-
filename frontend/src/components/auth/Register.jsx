@@ -33,8 +33,13 @@ const Register = () => {
   }
 
 
+  // const changeFileHandler = (e) => {
+  //   setInput(({ ...input, file: e.target.file?.[0] }))
+  // }
+
+
   const changeFileHandler = (e) => {
-    setInput(({ ...input, file: e.target.file?.[0] }))
+    setInput({ ...input, file: e.target.files?.[0] })
   }
 
 
@@ -61,7 +66,8 @@ const Register = () => {
       const res = await axios.post(`${USER_API_URL_ENDPOINT}/register`, formData, {
         headers: {
           "Content-Type": "multipart/form-data"
-        }, withCredentials: true
+        },
+        withCredentials: true
       })
       if (res.data.success) {
         navigate("/login")

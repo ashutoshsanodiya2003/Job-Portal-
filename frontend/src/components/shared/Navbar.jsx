@@ -3,13 +3,36 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { User2, LogOut } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import store from "@/redux/store";
+import { toast } from "sonner";
+import axios from "axios";
+import { USER_API_URL_ENDPOINT } from "@/utils/constant";
+import { setUser } from "@/redux/authSlice";
 
 const Navbar = () => {
   // const user = false; 
-  const {user} = useSelector(store=> store.auth)
+  const { user } = useSelector(store => store.auth)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const logoutHandler = async () => {
+    try {
+      const res = await axios.get(`${USER_API_URL_ENDPOINT}/logout`, { withCredentials: true })
+      if (res.data.success) {
+        dispatch(setUser(null))
+        toast.success(res.data.message)
+      }
+
+    } catch (error) {
+      console.log(error)
+
+      toast.error(error.data.message)
+
+    }
+
+  }
 
   return (
     <nav className="bg-white border-b">
@@ -44,7 +67,7 @@ const Navbar = () => {
             <Popover>
               <PopoverTrigger asChild>
                 <Avatar className="cursor-pointer">
-                  <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                  <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" />
                   <AvatarFallback>U</AvatarFallback>
                 </Avatar>
               </PopoverTrigger>
@@ -53,7 +76,7 @@ const Navbar = () => {
                 {/* User Info */}
                 <div className="flex items-center gap-3">
                   <Avatar>
-                    <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                    <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" />
                     <AvatarFallback>U</AvatarFallback>
                   </Avatar>
                   <div>
@@ -67,7 +90,7 @@ const Navbar = () => {
                   <Button variant="link" className="justify-start">
                     <User2 className="mr-2" />    <Link to={'/profile'}> View Profile</Link>
                   </Button>
-                  <Button variant="link" className="justify-start text-red-500">
+                  <Button onClick={logoutHandler} variant="link" className="justify-start text-red-500">
                     <LogOut className="mr-2" /> Logout
                   </Button>
                 </div>

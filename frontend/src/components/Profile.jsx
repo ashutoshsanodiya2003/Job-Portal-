@@ -14,11 +14,11 @@ import store from '@/redux/store';
 // const skills = ['html', 'JavaScript', 'java', 'react'];
 const isResume = true
 
-const Profile = () => { 
+const Profile = () => {
 
     const [open, setOpen] = useState(false)
-    const {user} = useSelector(store=>store.auth)
-    console.log("user.phoneNumber",user.phoneNumber)
+    const { user } = useSelector(store => store.auth)
+    // console.log("user.phoneNumber", user.phoneNumber)
     return (
         <div className="min-h-screen bg-gray-100">
             <Navbar />
@@ -61,13 +61,22 @@ const Profile = () => {
                 <div className="mt-6">
                     <h2 className="text-lg font-semibold mb-2">Skills</h2>
                     <div className="flex flex-wrap gap-2">
-                        {user?.profile?.skills.length !== 0 ? (
+                        {/* {user?.profile?.skills.length !== 0 ? (
                             user?.profile?.skills.map((skill, index) => (
+                                <Badge key={index}>{skill}</Badge>
+                            )) */}
+
+                        {user?.profile?.skills?.length > 0 ? (
+                            user.profile.skills.map((skill, index) => (
                                 <Badge key={index}>{skill}</Badge>
                             ))
                         ) : (
                             <span>NA</span>
                         )}
+
+                        {/* ) : (
+                            <span>NA</span>
+                        )} */}
                     </div>
                 </div>
                 <div className='grid w-full max-w-sm items-center gap-1.5 mt-5 border-b-2 border-b-blue-950'>
@@ -76,7 +85,7 @@ const Profile = () => {
                         <a
                             target='_blank'
                             rel="noopener noreferrer"
-                            href="https://github.com/ashutoshsanodiya2003/Job-Portal-"
+                            href={user?.profile?.resume}
                             className="text-blue-600 underline hover:text-blue-800"
                         >
                             {user?.profile?.resumeOriginalName}
