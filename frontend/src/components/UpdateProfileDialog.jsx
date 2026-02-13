@@ -76,11 +76,11 @@
 //     dispatch(setUser(res.data.user))
 //     toast.success(res.data.message)
 //   }
-  
+
 // } catch (error) {
 //   console.log(error);
 //   toast.error(error.response.data.message)
-  
+
 // }
 
 // setOpen(false)
@@ -207,42 +207,84 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     setInput(prev => ({ ...prev, file }))
   }
 
+  // const submitHandler = async (e) => {
+  //   e.preventDefault()
+    
+
+  //   try {
+  //     const formData = new FormData()
+  //     formData.append("fullname", input.fullname)
+  //     formData.append("email", input.email)
+  //     formData.append("phoneNumber", input.phoneNumber)
+  //     formData.append("bio", input.bio)
+  //     formData.append("skills", input.skills)
+  //     if (input.file) formData.append("file", input.file)
+  //     setLoading(true)
+
+  //     const res = await axios.patch(
+  //       `${USER_API_URL_ENDPOINT}/update/profile`,
+  //       formData,
+  //       {
+  //         headers: { "Content-Type": "multipart/form-data" },
+  //         withCredentials: true
+  //       }
+  //     )
+
+  //     if (res.data.success) {
+  //       dispatch(setUser(res.data.user))
+  //       console.log(res.data.user)
+  //       toast.success(res.data.message)
+  //       setOpen(false)
+  //     }
+
+  //   } catch (error) {
+  //     console.log(error)
+  //     toast.error(error?.response?.data?.message || "Something went wrong")
+  //   }finally{
+  //     setLoading(false)
+  //   }
+
+    
+  // }
+
   const submitHandler = async (e) => {
-    e.preventDefault()
-    setLoading(true)
+  e.preventDefault()
+  setLoading(true) // ✅ move here
 
-    try {
-      const formData = new FormData()
-      formData.append("fullname", input.fullname)
-      formData.append("email", input.email)
-      formData.append("phoneNumber", input.phoneNumber)
-      formData.append("bio", input.bio)
-      formData.append("skills", input.skills)
-      if (input.file) formData.append("file", input.file)
+  try {
+    const formData = new FormData()
+    formData.append("fullname", input.fullname)
+    formData.append("email", input.email)
+    formData.append("phoneNumber", input.phoneNumber)
+    formData.append("bio", input.bio)
+    formData.append("skills", input.skills)
 
-      const res = await axios.patch(
-        `${USER_API_URL_ENDPOINT}/update/profile`,
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-          withCredentials: true
-        }
-      )
-
-      if (res.data.success) {
-        dispatch(setUser(res.data.user))
-        console.log(res.data.user)
-        toast.success(res.data.message)
-        setOpen(false)
-      }
-
-    } catch (error) {
-      console.log(error)
-      toast.error(error?.response?.data?.message || "Something went wrong")
+    if (input.file) {
+      formData.append("file", input.file)
     }
 
+    const res = await axios.patch(
+      `${USER_API_URL_ENDPOINT}/update/profile`,
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+        withCredentials: true
+      }
+    )
+
+    if (res.data.success) {
+      dispatch(setUser(res.data.user))
+      toast.success(res.data.message)
+      setOpen(false)
+    }
+
+  } catch (error) {
+    toast.error(error?.response?.data?.message || "Something went wrong")
+  } finally {
     setLoading(false)
   }
+}
+
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -250,7 +292,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
         <DialogHeader>
           <DialogTitle>Update Profile</DialogTitle>
           <DialogDescription>
-           
+
           </DialogDescription>
         </DialogHeader>
 
@@ -318,15 +360,19 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
             />
           </div>
 
-          <Button
-            type="submit"
-            disabled={loading}
-            className={`w-full font-semibold py-2 rounded-md transition-colors ${
-              loading ? "bg-gray-400 cursor-not-allowed" : "bg-[#f83002] text-white hover:bg-[#d92c00]"
-            }`}
-          >
-            {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin inline-block" /> : "Update"}
-          </Button>
+           {
+                      loading ?
+                        <Button disabled>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Please wait
+                        </Button>
+                        :
+          
+                        <Button className="w-full bg-[#f83002] text-white font-semibold py-2 rounded-md hover:bg-[#d92c00] transition-colors">
+                          update
+                        </Button>
+          
+                    }
         </form>
       </DialogContent>
     </Dialog>
