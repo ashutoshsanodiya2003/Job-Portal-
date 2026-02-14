@@ -39,8 +39,9 @@ const Profile = () => {
                     <div>
                         <h1 className="text-xl font-bold">{user?.fullname}</h1>
                         <p className="text-gray-600">
-                            {user?.bio}
+                            {user?.profile?.bio}
                         </p>
+
                     </div>
                 </div>
 

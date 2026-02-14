@@ -80,8 +80,8 @@ const Navbar = () => {
                     <AvatarFallback>U</AvatarFallback>
                   </Avatar>
                   <div>
-                    <h4 className="font-semibold">Patel Mern Stack</h4>
-                    <p className="text-sm text-gray-500">Lorem ipsum dolor sit amet.</p>
+                    <h4 className="font-semibold">{user?.fullname}</h4>
+                    <p className="text-sm text-gray-500">{user?.profile?.bio}</p>
                   </div>
                 </div>
 
