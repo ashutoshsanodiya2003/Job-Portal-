@@ -3,10 +3,20 @@ import { Bookmark } from 'lucide-react'
 import { Button } from './ui/button'
 import { Avatar, AvatarImage, AvatarFallback } from './ui/avatar'
 import { useNavigate } from 'react-router-dom'
+import { mongo } from 'globals'
 
-const Job = () => {
+const Job = ({job}) => {
   const navigate = useNavigate()
-  const jobId = "gkgkahhkbknvznkngks"
+  // const jobId = "gkgkahhkbknvznkngks"
+
+  const dayAgoFunction = (mongodbTime) => {
+  const createdAt = new Date(mongodbTime)
+  const currentTime = new Date()
+  const timeDifference = currentTime - createdAt
+
+  return Math.floor(timeDifference / (1000 * 60 * 60 * 24))
+}
+
   return (
     <div className="w-full max-w-3xl mx-auto border border-gray-200 rounded-lg p-5 bg-white space-y-5">
 
@@ -19,9 +29,16 @@ const Job = () => {
           </Avatar>
 
           <div>
-            <h1 className="text-sm font-semibold">Company Name</h1>
+            <h1 className="text-sm font-semibold">{job?.company?.name}</h1>
             <p className="text-xs text-muted-foreground">India</p>
-            <p className="text-xs text-muted-foreground mt-1">2 days ago</p>
+            {/* <p className="text-xs text-muted-foreground mt-1">{dayAgoFunction(job?.createdAt)===0?"today":`${dayAgoFunction}`}</p> */}
+            <p className="text-xs text-muted-foreground mt-1">
+  {dayAgoFunction(job?.createdAt) === 0
+    ? "Today"
+    : `${dayAgoFunction(job?.createdAt)} days ago`}
+</p>
+
+
           </div>
         </div>
 
@@ -32,24 +49,22 @@ const Job = () => {
 
       {/* Job info */}
       <div>
-        <h1 className="text-lg font-semibold">Frontend Developer</h1>
+        <h1 className="text-lg font-semibold">{job?.title}</h1>
         <p className="text-sm text-muted-foreground leading-relaxed mt-1">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-          Nostrum aliquam rem repellat pariatur itaque eligendi accusamus,
-          dignissimos quas quo impedit.
+          {job?.description}
         </p>
       </div>
 
       {/* Tags */}
       <div className="flex flex-wrap gap-2">
-        <span className="px-3 py-1 bg-muted rounded-full text-sm">12 Positions</span>
-        <span className="px-3 py-1 bg-muted rounded-full text-sm">Part Time</span>
-        <span className="px-3 py-1 bg-muted rounded-full text-sm">₹24 LPA</span>
+        <span className="px-3 py-1 bg-muted rounded-full text-sm">{job?.position}</span>
+        <span className="px-3 py-1 bg-muted rounded-full text-sm">{job?.jobType}</span>
+        <span className="px-3 py-1 bg-muted rounded-full text-sm">{job?.salary}</span>
       </div>
 
       {/* Footer */}
       <div className="flex items-center justify-end gap-3 pt-2 border-t">
-        <Button onClick = {(e)=>navigate(`/description/${jobId}`)} variant="outline">Details</Button>
+        <Button onClick = {(e)=>navigate(`/description/${job?._id}`)} variant="outline">Details</Button>
         <Button>Save For Later</Button>
       </div>
  
