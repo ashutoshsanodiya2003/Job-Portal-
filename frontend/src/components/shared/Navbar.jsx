@@ -45,9 +45,24 @@ const Navbar = () => {
         {/* Menu + Avatar / Auth Buttons */}
         <div className="flex items-center gap-6">
           <ul className="flex gap-6 text-gray-700 font-medium">
-            <li className="cursor-pointer hover:text-[#f83002]"> <Link to={'/'}>Home</Link></li>
-            <li className="cursor-pointer hover:text-[#f83002]"><Link to={'/jobs'}>Jobs</Link></li>
-            <li className="cursor-pointer hover:text-[#f83002]"><Link to={'/Browse'}>Browse</Link></li>
+
+
+            {
+              user && user.role === 'recruiter' ? (
+                <>
+                  <li className="cursor-pointer hover:text-[#f83002]"> <Link to={'/admin/compnies'}>Compnies</Link></li>
+                  <li className="cursor-pointer hover:text-[#f83002]"><Link to={'/admin/jobs'}>Jobs</Link></li>
+                </>
+              ) : (
+                <>
+
+                  <li className="cursor-pointer hover:text-[#f83002]"> <Link to={'/'}>Home</Link></li>
+                  <li className="cursor-pointer hover:text-[#f83002]"><Link to={'/jobs'}>Jobs</Link></li>
+                  <li className="cursor-pointer hover:text-[#f83002]"><Link to={'/Browse'}>Browse</Link></li>
+                </>
+              )
+            }
+
           </ul>
 
           {!user ? (
@@ -87,9 +102,12 @@ const Navbar = () => {
 
                 {/* Actions */}
                 <div className="flex flex-col gap-2">
-                  <Button variant="link" className="justify-start">
+                  {
+                    user&& user.role === 'student' &&
+                    <Button variant="link" className="justify-start">
                     <User2 className="mr-2" />    <Link to={'/profile'}> View Profile</Link>
                   </Button>
+                  }
                   <Button onClick={logoutHandler} variant="link" className="justify-start text-red-500">
                     <LogOut className="mr-2" /> Logout
                   </Button>

@@ -9,6 +9,7 @@ import Jobs from './components/Jobs'
 import Browse from './components/Browse'
 import Profile from './components/Profile'
 import JobDescription from './components/JobDescription'
+import Companies from './components/admin/Companies'
 
 function App() {
 
@@ -45,6 +46,11 @@ function App() {
 
       element:<JobDescription/>
 
+    }
+    // admin ke liye yaha se start hoga 
+    ,{
+      path:"/admin/compnies",
+      element:<Companies/>
     }
   ])
   
