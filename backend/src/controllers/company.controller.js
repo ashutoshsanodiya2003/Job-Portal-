@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import { Company } from "../models/company.model.js";
+import getDataUri from "../utils/data.uri.js";
+import cloudinary from "../utils/cloudinary.js";
 
 export const registerCompany = async (req, res) => {
   try {
@@ -176,7 +178,12 @@ export const UpdateCompany = async (req, res) => {
 
     const { name, description, website, location } = req.body;
 
-    const updateData = { name, description, website, location };
+    const file = req.file
+    const fileUri = getDataUri(file)
+    const cloudResponse = await cloudinary.uploader.upload(fileUri.content)
+    const logo = cloudResponse.secure_url
+
+    const updateData = { name, description, website, location ,logo};
 
     const company = await Company.findByIdAndUpdate(companyId, updateData, { new: true });
 
