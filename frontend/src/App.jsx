@@ -18,59 +18,62 @@ function App() {
   const appRouter = createBrowserRouter([
 
     {
-      path:'/',
-      element:<Home/>
+      path: '/',
+      element: <Home />
     },
     {
-      path:'/register',
-      element:<Register/>
-    },{
-      path:'/login',
-      element:<Login/>
+      path: '/register',
+      element: <Register />
+    }, {
+      path: '/login',
+      element: <Login />
     },
     {
-      path:'/jobs',
-      element:<Jobs/>
-
-    },
-     {
-      path:'/browse',
-      element:<Browse/>
+      path: '/jobs',
+      element: <Jobs />
 
     },
     {
-      path:'/profile',
-      element:<Profile/>
+      path: '/browse',
+      element: <Browse />
 
     },
     {
-      path:'/description/:id',
+      path: '/profile',
+      element: <Profile />
 
-      element:<JobDescription/>
+    },
+    {
+      path: '/description/:id',
+
+      element: <JobDescription />
 
     }
     // admin ke liye yaha se start hoga 
-    ,{
-      path: "/admin/companies"
-,
-      element:<Companies/>
-    },{
-  path: "/admin/companies/create",
-  element: <CompanyCreate/>
-},{
-      path: "/admin/companies/:id"
-,
-      element:<CompanySetup/>
+    ,
+    {
+      path: "/admin/companies",
+
+
+      element: <Companies />
+    },
+    {
+      path: "/admin/companies/create",
+      element: <CompanyCreate />
+    },
+    {
+      path: "/admin/companies/:id",
+      element: <CompanySetup />
     }
 
   ])
-  
+
 
   return (
     <div>
 
 
-      <RouterProvider router={appRouter}/>
+      <RouterProvider router={appRouter} />
     </div>
   )
 }

@@ -18,7 +18,7 @@ const CompanyCreate = () => {
     const registerNewCompany = async () => {
         try {
 const res = await axios.post(`${COMPANY_API_URL_ENDPOINT}/register`,{companyName},
-    {withCredentials:true}
+    {withCredentials:true} 
 )
 if(res?.data?.success){
     dispatch(setSingleCompany(res.data.company))
@@ -61,6 +61,7 @@ if(res?.data?.success){
 
                     <div className="flex justify-end gap-3">
                         <Button variant="outline" onClick={() => navigate("/admin/companies")
+
                         }>
                             Cancel
                         </Button>

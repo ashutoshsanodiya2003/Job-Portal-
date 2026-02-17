@@ -10,24 +10,31 @@ import store from '@/redux/store'
 import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
-useGetAllJobs()
+  useGetAllJobs()
 
-const {user} = useSelector(store=>store.auth)
-const navigate = useNavigate()
+  const { user } = useSelector(store => store.auth)
+  const navigate = useNavigate()
 
-useEffect(()=>{
-  if(user?.role === 'recruiter'){
-    navigate('/admin/compnies')
+  // useEffect(() => {
+  //   if (user?.role === 'recruiter') {
+  //     navigate('/admin/companies', { replace: true })
+  //   }
+  // }, [])
+
+  useEffect(() => {
+  if (user?.role === 'recruiter') {
+    navigate('/admin/companies', { replace: true })
   }
-},[])
+}, [user, navigate])
+
   return (
     <div>
 
-        <Navbar/>
-        <HeroSection/>
-        <CategoryCarousel/>
-        <LatestJobs/>
-        <Footer/>
+      <Navbar />
+      <HeroSection />
+      <CategoryCarousel />
+      <LatestJobs />
+      <Footer />
     </div>
   )
 }
