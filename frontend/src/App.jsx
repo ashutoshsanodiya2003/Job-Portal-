@@ -14,6 +14,7 @@ import CompanyCreate from './components/admin/CompanyCreate'
 import CompanySetup from './components/admin/CompanySetup'
 // import Jobs from "./components/admin/AdminJobs"
 import AdminJobs from './components/admin/AdminJobs'
+import PostJob from './components/admin/PostJob'
 
 function App() {
 
@@ -68,8 +69,11 @@ function App() {
       element: <CompanySetup />
     },
     {
-      path:"/admin/jobs",
-      element:<AdminJobs/>
+      path: "/admin/jobs",
+      element: <AdminJobs />
+    }, {
+      path: "/admin/jobs/create",
+      element: <PostJob />
     }
 
   ])
