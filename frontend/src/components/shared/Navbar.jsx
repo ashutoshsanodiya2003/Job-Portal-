@@ -50,7 +50,7 @@ const Navbar = () => {
             {
               user && user.role === 'recruiter' ? (
                 <>
-                  <li className="cursor-pointer hover:text-[#f83002]"> <Link to={'/admin/compnies'}>Compnies</Link></li>
+                  <li className="cursor-pointer hover:text-[#f83002]"> <Link to={'/admin/companies'}>Compnies</Link></li>
                   <li className="cursor-pointer hover:text-[#f83002]"><Link to={'/admin/jobs'}>Jobs</Link></li>
                 </>
               ) : (

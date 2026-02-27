@@ -9,9 +9,11 @@ import { COMPANY_API_URL_ENDPOINT } from "@/utils/constant";
 import { toast } from "sonner";
 import store from "@/redux/store";
 import { useSelector } from "react-redux";
+import useGetCompanyById from "@/hooks/useGetCompanyById";
 
 const CompanySetup = () => {
   const params = useParams()
+  useGetCompanyById(params.id)
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   const [input, setInput] = useState({
@@ -58,7 +60,7 @@ const CompanySetup = () => {
 
       if (res.data.success) {
         toast.success(res.data.message)
-        navigate('/admin/companies')
+         navigate('/admin/companies')
 
       }
 

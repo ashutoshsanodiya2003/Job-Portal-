@@ -12,6 +12,8 @@ import JobDescription from './components/JobDescription'
 import Companies from './components/admin/Companies'
 import CompanyCreate from './components/admin/CompanyCreate'
 import CompanySetup from './components/admin/CompanySetup'
+// import Jobs from "./components/admin/AdminJobs"
+import AdminJobs from './components/admin/AdminJobs'
 
 function App() {
 
@@ -64,6 +66,10 @@ function App() {
     {
       path: "/admin/companies/:id",
       element: <CompanySetup />
+    },
+    {
+      path:"/admin/jobs",
+      element:<AdminJobs/>
     }
 
   ])
