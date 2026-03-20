@@ -24,7 +24,7 @@ const Job = ({job}) => {
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-4">
           <Avatar className="h-12 w-12">
-            <AvatarImage src="https://png.pngtree.com/png-vector/20190304/ourmid/pngtree-growth-business-company-logo-png-image_728232.jpg" />
+            <AvatarImage src={job?.company?.logo} />
             <AvatarFallback>JB</AvatarFallback>
           </Avatar>
 
