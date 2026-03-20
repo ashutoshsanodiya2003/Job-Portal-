@@ -18,6 +18,9 @@ import {
 
 import { MoreHorizontal, SpaceIcon } from 'lucide-react'
 import { useSelector } from 'react-redux'
+import axios from 'axios'
+import { APPLICATION_API_URL_ENDPOINT } from '@/utils/constant'
+import { toast } from 'sonner'
 
 const shortlistingStatus = ["Accepted", "Rejected"]
 
@@ -25,6 +28,28 @@ const shortlistingStatus = ["Accepted", "Rejected"]
 const ApplicantsTable = () => {
 
     const { applicants } = useSelector(store => store.application)
+
+
+    const statusHandler = async (status,id)=>{
+        console.log('called')
+
+        try {
+
+            axios.defaults.withCredentials = true
+            const res = await axios.post(`${APPLICATION_API_URL_ENDPOINT}/status/${id}/update`,{status})
+
+            console.log(res)
+            if(res.data.success){
+                toast.success(res.data.message)
+            }
+            
+        } catch (error) {
+            toast.error(error.response.data.message)
+            
+        }
+    }
+
+
 
 
     return (
@@ -75,6 +100,7 @@ const ApplicantsTable = () => {
                                         <PopoverContent className="w-28">
                                             {shortlistingStatus.map((status, index) => (
                                                 <div
+                                                onClick={()=>statusHandler(status,item?._id)}
                                                     key={index}
                                                     className="p-2 text-sm hover:bg-gray-100 cursor-pointer rounded"
                                                 >
