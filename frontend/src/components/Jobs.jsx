@@ -4,6 +4,7 @@ import Job from './Job'
 import FilterCard from './FilterCard'
 import store from '@/redux/store'
 import { useSelector } from 'react-redux'
+import { motion } from 'framer-motion'
 
 // const jobArray = [1, 2, 3, 4, 5, 6, 7, 8]
 
@@ -68,9 +69,15 @@ const Jobs = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {
                    filterJobs.map((job) => (
-                      <div key={job?._id}>
+                      <motion.div
+                      initial={{opacity:0,x:100}}
+                      animate={{opacity:1,x:0}}
+                      exit={{opacity:0,x:-100}}
+                      transition={{duration:0.3}}
+                      
+                      key={job?._id}>
                         <Job job={job} />
-                      </div>
+                      </motion.div>
                     ))
                   }
                 </div>

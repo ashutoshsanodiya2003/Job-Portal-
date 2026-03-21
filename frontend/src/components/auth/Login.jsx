@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../shared/Navbar'
 import { Input } from '../ui/input'
 import * as Label from '@radix-ui/react-label'
@@ -14,7 +14,7 @@ import { Loader2 } from 'lucide-react'
 
 
 const Login = () => {
-  const { loading } = useSelector(store => store.auth)
+  const { loading ,user} = useSelector(store => store.auth)
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -52,6 +52,12 @@ const Login = () => {
     }
 
   }
+
+  useEffect(()=>{
+    if(user){
+      navigate('/')
+    }
+  },[])
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
